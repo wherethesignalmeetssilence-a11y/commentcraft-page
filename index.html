@@ -89,26 +89,25 @@
         function setupPaddle() {
             console.log('Paddle.js script has loaded, running setupPaddle()');
             
-            // Ініціалізуємо Paddle в режимі Sandbox
-            Paddle.Initialize({
+            // --- !!! ВИПРАВЛЕНО: Використовуємо Paddle.Setup() замість Paddle.Initialize() !!! ---
+            Paddle.Setup({ 
                 token: "test_fa74c4742491f163d17dc1d12fb", // Твій Client-side Token
                 environment: "sandbox",
-                events: {
-                    onCheckout: (data) => {
-                        console.log('Checkout event:', data);
-                        if (data.event === 'checkout.closed') {
-                             document.getElementById('payment-title').innerText = 'Payment Window Closed';
-                             document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
-                        }
-                        if (data.event === 'checkout.completed') {
-                             document.getElementById('payment-title').innerText = 'Payment Successful!';
-                             document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
-                        }
+                // --- !!! ВИПРАВЛЕНО: Використовуємо eventCallback замість events: !!! ---
+                eventCallback: function(data) { 
+                    console.log('Checkout event:', data);
+                    if (data.event === 'checkout.closed') {
+                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
+                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
+                    }
+                    if (data.event === 'checkout.completed') {
+                         document.getElementById('payment-title').innerText = 'Payment Successful!';
+                         document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
                     }
                 }
             });
 
-            // Функція для відкриття вікна оплати
+            // Функція для відкриття вікна оплати (залишається без змін)
             (function openCheckout() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const transactionId = urlParams.get('_ptxn');
@@ -118,6 +117,7 @@
                     document.getElementById('payment-title').innerText = 'Loading Payment...';
                     document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
                     
+                    // Цей виклик тепер спрацює, оскільки Paddle.Setup вже виконано
                     Paddle.Checkout.open({
                         transactionId: transactionId
                     });
@@ -129,15 +129,11 @@
             })();
         }
 
-        // --- КЛЮЧОВА ЗМІНА ---
-        // Ми не запускаємо код одразу, а чекаємо на подію 'paddle:loaded',
-        // яку Paddle.js відправить, коли буде готовий.
+        // --- Логіка очікування завантаження (залишається без змін) ---
         if (window.Paddle) {
-            // Якщо скрипт вже завантажений (напр. з кешу), запускаємо одразу
             console.log('Paddle object already exists. Running setup.');
             setupPaddle();
         } else {
-            // Інакше, додаємо слухача події
             console.log('Paddle object not found. Adding event listener for paddle:loaded.');
             document.addEventListener('paddle:loaded', setupPaddle, false);
         }
