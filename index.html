@@ -1,47 +1,52 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CommentCraft AI - Розширення для YouTube</title> <style>
+    <title>CommentCraft AI - YouTube Extension</title>
+
+    <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+    <style>
         body {
             font-family: sans-serif;
             line-height: 1.6;
-            margin: 0; /* Прибираємо стандартні відступи */
-            padding: 0; /* Прибираємо стандартні відступи */
-            color: #333; /* Колір тексту за замовчуванням */
+            margin: 0;
+            padding: 0;
+            color: #333;
             /* === Фонове зображення === */
-            background-image: url('images/background.jpg'); /* Шлях до твого фону */
-            background-size: cover; /* Масштабувати, щоб покрити весь екран */
-            background-position: center center; /* Центрувати зображення */
-            background-repeat: no-repeat; /* Не повторювати */
-            background-attachment: fixed; /* Фіксувати фон при прокрутці */
-            min-height: 100vh; /* Займати щонайменше всю висоту екрану */
-            display: flex; /* Використовуємо flex для центрування контенту */
-            justify-content: center; /* Центрувати по горизонталі */
-            align-items: center; /* Центрувати по вертикалі */
-            text-align: center; /* Центрувати текст всередині контейнера */
+            background-image: url('images/background.jpg'); /* Переконайся, що цей файл є в папці images */
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        /* Напівпрозорий контейнер для контенту, щоб текст було видно */
+        /* Напівпрозорий контейнер для контенту */
         .content-container {
-            background-color: rgba(255, 255, 255, 0.85); /* Білий фон з прозорістю 85% */
+            background-color: rgba(255, 255, 255, 0.9); /* Трохи менш прозорий для читабельності */
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            max-width: 700px; /* Обмеження ширини */
-            margin: 20px; /* Відступи від країв екрану */
+            max-width: 700px;
+            margin: 20px;
         }
         .logo {
-            max-width: 150px; /* Максимальна ширина логотипу */
-            height: auto; /* Автоматична висота */
-            margin-bottom: 20px; /* Відступ під логотипом */
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
         }
         h1 {
-            color: #222; /* Темніший колір заголовка */
-            margin-top: 0; /* Прибрати верхній відступ */
+            color: #222;
+            margin-top: 0;
         }
         p {
-            color: #444; /* Трохи темніший текст параграфів */
+            color: #444;
+            font-size: 1.1em; /* Трохи більший текст */
         }
         .footer {
             margin-top: 30px;
@@ -57,17 +62,78 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* === Стилі для статусу завантаження оплати === */
+        #payment-status {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #0056b3;
+            min-height: 50px; /* Резервуємо місце, щоб контейнер не "стрибав" */
+        }
     </style>
 </head>
 <body>
 
     <div class="content-container">
-        <img src="images/logo.png" alt="Логотип CommentCraft AI" class="logo"> <h1>Вітаємо на сторінці розширення CommentCraft AI!</h1> <p>Це офіційна сторінка розширення CommentCraft AI для Google Chrome.</p>
-        <p>Дізнайтеся більше про функції та можливості.</p>
+        <img src="images/logo.png" alt="CommentCraft AI Logo" class="logo"> <h1 id="payment-title">Loading Payment...</h1>
+        <p id="payment-status">Please wait, we are opening the secure payment window.</p>
+
+        <div class="features">
+            <p>A powerful AI toolkit for YouTube Creators. Instantly write comments and replies, get tag suggestions, translate text, and analyze video data.</p>
+        </div>
+
         <div class="footer">
-            <p>&copy; <?php echo date("Y"); ?> wherethesignalmeetssilence-a11y. Усі права захищено.</p>
-            </div>
+            <p>&copy; 2025 wherethesignalmeetssilence-a11y. All rights reserved.</p>
+        </div>
     </div>
+
+    <script type="text/javascript">
+        // Ініціалізуємо Paddle в режимі Sandbox
+        Paddle.Initialize({
+            token: "test_fa74c4742491f163d17dc1d12fb", // !!! ЗАМІНИ НА СВІЙ CLIENT-SIDE TOKEN !!!
+            environment: "sandbox",
+            events: {
+                onCheckout: (data) => {
+                    // Ця функція спрацює, коли користувач взаємодіє з вікном оплати
+                    console.log('Checkout event:', data);
+                    
+                    if (data.event === 'checkout.closed') {
+                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
+                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
+                    }
+                    
+                    if (data.event === 'checkout.completed') {
+                         document.getElementById('payment-title').innerText = 'Payment Successful!';
+                         document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
+                    }
+                }
+            }
+        });
+
+        // Ця функція запускається одразу при завантаженні сторінки
+        (function openCheckout() {
+            // Отримуємо параметри з URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionId = urlParams.get('_ptxn'); // Шукаємо наш ID транзакції
+
+            if (transactionId) {
+                // Якщо ID знайдено, відкриваємо вікно оплати
+                console.log('Transaction ID found:', transactionId);
+                document.getElementById('payment-title').innerText = 'Loading Payment...';
+                document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
+                
+                Paddle.Checkout.open({
+                    transactionId: transactionId
+                });
+
+            } else {
+                // Якщо хтось зайшов на сторінку без ID
+                console.error('No transaction ID (_ptxn) found in URL.');
+                document.getElementById('payment-title').innerText = 'Error';
+                document.getElementById('payment-status').innerText = 'The payment link is invalid or has expired. Please try generating a new link from the extension.';
+            }
+        })();
+    </script>
 
 </body>
 </html>
