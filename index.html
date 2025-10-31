@@ -8,14 +8,14 @@
     <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
     <style>
+        /* (Усі твої стилі залишаються без змін) */
         body {
             font-family: sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
             color: #333;
-            /* === Фонове зображення === */
-            background-image: url('images/background.jpg'); /* Переконайся, що цей файл є в папці images */
+            background-image: url('images/background.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -26,9 +26,8 @@
             align-items: center;
             text-align: center;
         }
-        /* Напівпрозорий контейнер для контенту */
         .content-container {
-            background-color: rgba(255, 255, 255, 0.9); /* Трохи менш прозорий для читабельності */
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -46,7 +45,7 @@
         }
         p {
             color: #444;
-            font-size: 1.1em; /* Трохи більший текст */
+            font-size: 1.1em;
         }
         .footer {
             margin-top: 30px;
@@ -62,77 +61,87 @@
         a:hover {
             text-decoration: underline;
         }
-
-        /* === Стилі для статусу завантаження оплати === */
         #payment-status {
             font-weight: bold;
             font-size: 1.2em;
             color: #0056b3;
-            min-height: 50px; /* Резервуємо місце, щоб контейнер не "стрибав" */
+            min-height: 50px;
         }
     </style>
 </head>
 <body>
 
     <div class="content-container">
-        <img src="images/logo.png" alt="CommentCraft AI Logo" class="logo"> <h1 id="payment-title">Loading Payment...</h1>
+        <img src="images/logo.png" alt="CommentCraft AI Logo" class="logo">
+        <h1 id="payment-title">Loading Payment...</h1>
         <p id="payment-status">Please wait, we are opening the secure payment window.</p>
-
         <div class="features">
             <p>A powerful AI toolkit for YouTube Creators. Instantly write comments and replies, get tag suggestions, translate text, and analyze video data.</p>
         </div>
-
         <div class="footer">
             <p>&copy; 2025 wherethesignalmeetssilence-a11y. All rights reserved.</p>
         </div>
     </div>
 
     <script type="text/javascript">
-        // Ініціалізуємо Paddle в режимі Sandbox
-        Paddle.Initialize({
-            token: "test_fa74c4742491f163d17dc1d12fb", // !!! ЗАМІНИ НА СВІЙ CLIENT-SIDE TOKEN !!!
-            environment: "sandbox",
-            events: {
-                onCheckout: (data) => {
-                    // Ця функція спрацює, коли користувач взаємодіє з вікном оплати
-                    console.log('Checkout event:', data);
-                    
-                    if (data.event === 'checkout.closed') {
-                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
-                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
-                    }
-                    
-                    if (data.event === 'checkout.completed') {
-                         document.getElementById('payment-title').innerText = 'Payment Successful!';
-                         document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
+        
+        // Створюємо функцію, яка містить всю нашу логіку
+        function setupPaddle() {
+            console.log('Paddle.js script has loaded, running setupPaddle()');
+            
+            // Ініціалізуємо Paddle в режимі Sandbox
+            Paddle.Initialize({
+                token: "test_fa74c4742491f163d17dc1d12fb", // Твій Client-side Token
+                environment: "sandbox",
+                events: {
+                    onCheckout: (data) => {
+                        console.log('Checkout event:', data);
+                        if (data.event === 'checkout.closed') {
+                             document.getElementById('payment-title').innerText = 'Payment Window Closed';
+                             document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
+                        }
+                        if (data.event === 'checkout.completed') {
+                             document.getElementById('payment-title').innerText = 'Payment Successful!';
+                             document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        // Ця функція запускається одразу при завантаженні сторінки
-        (function openCheckout() {
-            // Отримуємо параметри з URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const transactionId = urlParams.get('_ptxn'); // Шукаємо наш ID транзакції
+            // Функція для відкриття вікна оплати
+            (function openCheckout() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const transactionId = urlParams.get('_ptxn');
 
-            if (transactionId) {
-                // Якщо ID знайдено, відкриваємо вікно оплати
-                console.log('Transaction ID found:', transactionId);
-                document.getElementById('payment-title').innerText = 'Loading Payment...';
-                document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
-                
-                Paddle.Checkout.open({
-                    transactionId: transactionId
-                });
+                if (transactionId) {
+                    console.log('Transaction ID found:', transactionId);
+                    document.getElementById('payment-title').innerText = 'Loading Payment...';
+                    document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
+                    
+                    Paddle.Checkout.open({
+                        transactionId: transactionId
+                    });
+                } else {
+                    console.error('No transaction ID (_ptxn) found in URL.');
+                    document.getElementById('payment-title').innerText = 'Error';
+                    document.getElementById('payment-status').innerText = 'The payment link is invalid or has expired. Please try generating a new link from the extension.';
+                }
+            })();
+        }
 
-            } else {
-                // Якщо хтось зайшов на сторінку без ID
-                console.error('No transaction ID (_ptxn) found in URL.');
-                document.getElementById('payment-title').innerText = 'Error';
-                document.getElementById('payment-status').innerText = 'The payment link is invalid or has expired. Please try generating a new link from the extension.';
-            }
-        })();
+        // --- КЛЮЧОВА ЗМІНА ---
+        // Ми не запускаємо код одразу, а чекаємо на подію 'paddle:loaded',
+        // яку Paddle.js відправить, коли буде готовий.
+        if (window.Paddle) {
+            // Якщо скрипт вже завантажений (напр. з кешу), запускаємо одразу
+            console.log('Paddle object already exists. Running setup.');
+            setupPaddle();
+        } else {
+            // Інакше, додаємо слухача події
+            console.log('Paddle object not found. Adding event listener for paddle:loaded.');
+            document.addEventListener('paddle:loaded', setupPaddle, false);
+        }
+
     </script>
 
 </body>
