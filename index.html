@@ -85,14 +85,16 @@
 
     <script type="text/javascript">
         
-        // Створюємо функцію, яка містить всю нашу логіку
         function setupPaddle() {
-            console.log('Paddle.js script has loaded, running setupPaddle()');
+            console.log('Paddle.js v2 script has loaded, running setupPaddle()');
             
-            // --- !!! ВИПРАВЛЕНО: Використовуємо Paddle.Setup() замість Paddle.Initialize() !!! ---
+            // --- !!! КЛЮЧОВА ЗМІНА (від Brendo) !!! ---
+            // Ми повинні встановити середовище ДО виклику Setup()
+            Paddle.Environment.set("sandbox");
+
+            // Тепер Setup() викликається БЕЗ параметра environment
             Paddle.Setup({ 
                 token: "test_fa74c4742491f163d17dc1d12fb", // Твій Client-side Token
-                // --- !!! ВИПРАВЛЕНО: Використовуємо eventCallback замість events: !!! ---
                 eventCallback: function(data) { 
                     console.log('Checkout event:', data);
                     if (data.event === 'checkout.closed') {
@@ -116,7 +118,6 @@
                     document.getElementById('payment-title').innerText = 'Loading Payment...';
                     document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
                     
-                    // Цей виклик тепер спрацює, оскільки Paddle.Setup вже виконано
                     Paddle.Checkout.open({
                         transactionId: transactionId
                     });
@@ -128,7 +129,7 @@
             })();
         }
 
-        // --- Логіка очікування завантаження (залишається без змін) ---
+        // Логіка очікування завантаження (залишається без змін)
         if (window.Paddle) {
             console.log('Paddle object already exists. Running setup.');
             setupPaddle();
