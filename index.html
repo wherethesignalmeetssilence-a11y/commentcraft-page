@@ -85,25 +85,32 @@
 
     <script type="text/javascript">
         
+        // --- !!! КЛЮЧОВА ЗМІНА #1: Прапорець, щоб 'closed' не перезаписав 'completed' ---
+        let paymentCompleted = false;
+
         function setupPaddle() {
             console.log('Paddle.js v2 script has loaded, running setupPaddle()');
             
-            // --- !!! КЛЮЧОВА ЗМІНА (від Brendo) !!! ---
-            // Ми повинні встановити середовище ДО виклику Setup()
+            // Встановлюємо середовище ДО виклику Setup()
             Paddle.Environment.set("sandbox");
 
-            // Тепер Setup() викликається БЕЗ параметра environment
             Paddle.Setup({ 
                 token: "test_fa74c4742491f163d17dc1d12fb", // Твій Client-side Token
                 eventCallback: function(data) { 
-                    console.log('Checkout event:', data);
-                    if (data.event === 'checkout.closed') {
-                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
-                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
-                    }
-                    if (data.event === 'checkout.completed') {
+                    console.log('Checkout event:', data); // Цей лог допоміг!
+                    
+                    // --- !!! КЛЮЧОВА ЗМІНА #2: Використовуємо data.name замість data.event !!! ---
+                    if (data.name === 'checkout.completed') {
+                         paymentCompleted = true; // Встановлюємо прапорець
                          document.getElementById('payment-title').innerText = 'Payment Successful!';
                          document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
+                    }
+                    
+                    // --- !!! КЛЮЧОВА ЗМІНА #3: Перевіряємо прапорець !!! ---
+                    // Цей блок спрацює, ТІЛЬКИ якщо оплата НЕ була успішною (тобто 'checkout.completed' не спрацював)
+                    if (data.name === 'checkout.closed' && !paymentCompleted) { 
+                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
+                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
                     }
                 }
             });
