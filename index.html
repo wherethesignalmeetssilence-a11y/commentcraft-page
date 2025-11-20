@@ -8,7 +8,7 @@
     <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
     <style>
-        /* (Усі твої стилі залишаються без змін) */
+        /* (Стилі залишаються без змін) */
         body {
             font-family: sans-serif;
             line-height: 1.6;
@@ -45,7 +45,6 @@
         }
         p {
             color: #444;
-            font-size: 1.1em;
         }
         .footer {
             margin-top: 30px;
@@ -61,61 +60,36 @@
         a:hover {
             text-decoration: underline;
         }
-        #payment-status {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: #0056b3;
-            min-height: 50px;
-        }
     </style>
 </head>
 <body>
 
     <div class="content-container">
-        <img src="images/logo.png" alt="CommentCraft AI Logo" class="logo">
-        <h1 id="payment-title">Loading Payment...</h1>
-        <p id="payment-status">Please wait, we are opening the secure payment window.</p>
-        <div class="features">
-            <p>A powerful AI toolkit for YouTube Creators. Instantly write comments and replies, get tag suggestions, translate text, and analyze video data.</p>
-        </div>
+        <img src="images/logo128.png" alt="CommentCraft AI Logo" class="logo">
+        
+        <h1 id="payment-title">Processing Payment...</h1>
+        <p id="payment-status">Please wait while we initialize the secure checkout.</p>
+
         <div class="footer">
-            <p>&copy; 2025 wherethesignalmeetssilence-a11y. All rights reserved.</p>
+            <p>CommentCraft AI &copy; 2025. Secure payments by Paddle.</p>
+            <p>
+                <a href="https://wherethesignalmeetssilence-a11y.github.io/commentcraft-page/privacy.html" target="_blank">Privacy Policy</a> | 
+                <a href="mailto:wherethesignalmeetssilence@gmail.com">Support</a>
+            </p>
         </div>
     </div>
 
-    <script type="text/javascript">
-        
-        // --- !!! КЛЮЧОВА ЗМІНА #1: Прапорець, щоб 'closed' не перезаписав 'completed' ---
-        let paymentCompleted = false;
-
+    <script>
+        // Функція налаштування Paddle
         function setupPaddle() {
-            console.log('Paddle.js v2 script has loaded, running setupPaddle()');
-            
-            // Встановлюємо середовище ДО виклику Setup()
-            Paddle.Environment.set("sandbox");
-
-            Paddle.Setup({ 
-                token: "test_fa74c4742491f163d17dc1d12fb", // Твій Client-side Token
-                eventCallback: function(data) { 
-                    console.log('Checkout event:', data); // Цей лог допоміг!
-                    
-                    // --- !!! КЛЮЧОВА ЗМІНА #2: Використовуємо data.name замість data.event !!! ---
-                    if (data.name === 'checkout.completed') {
-                         paymentCompleted = true; // Встановлюємо прапорець
-                         document.getElementById('payment-title').innerText = 'Payment Successful!';
-                         document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
-                    }
-                    
-                    // --- !!! КЛЮЧОВА ЗМІНА #3: Перевіряємо прапорець !!! ---
-                    // Цей блок спрацює, ТІЛЬКИ якщо оплата НЕ була успішною (тобто 'checkout.completed' не спрацював)
-                    if (data.name === 'checkout.closed' && !paymentCompleted) { 
-                         document.getElementById('payment-title').innerText = 'Payment Window Closed';
-                         document.getElementById('payment-status').innerText = 'If you have completed the payment, your status will update in the extension shortly. You can now close this tab.';
-                    }
-                }
+            Paddle.Setup({
+                // !!! ВАЖЛИВО: ЗАМІНИ ЦЕ НА СВІЙ "LIVE" TOKEN (live_...) !!!
+                token: "live_8fdde7bc3caf576067a8e00788a" 
             });
+            
+            // Рядок Paddle.Environment.set("sandbox"); ВИДАЛЕНО для Production режиму!
 
-            // Функція для відкриття вікна оплати (залишається без змін)
+            // Логіка відкриття вікна оплати
             (function openCheckout() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const transactionId = urlParams.get('_ptxn');
@@ -126,17 +100,27 @@
                     document.getElementById('payment-status').innerText = 'Please wait, we are opening the secure payment window.';
                     
                     Paddle.Checkout.open({
-                        transactionId: transactionId
+                        transactionId: transactionId,
+                        successCallback: function(data) {
+                            console.log('Payment Complete!', data);
+                            document.getElementById('payment-title').innerText = 'Payment Successful!';
+                            document.getElementById('payment-status').innerText = 'Thank you! Your status will be updated in the extension. You can now close this tab.';
+                        },
+                        closeCallback: function() {
+                            console.log('Checkout closed');
+                            document.getElementById('payment-title').innerText = 'Payment Cancelled';
+                            document.getElementById('payment-status').innerText = 'You closed the payment window. Refresh the page to try again.';
+                        }
                     });
                 } else {
                     console.error('No transaction ID (_ptxn) found in URL.');
-                    document.getElementById('payment-title').innerText = 'Error';
-                    document.getElementById('payment-status').innerText = 'The payment link is invalid or has expired. Please try generating a new link from the extension.';
+                    document.getElementById('payment-title').innerText = 'Welcome';
+                    document.getElementById('payment-status').innerText = 'To upgrade to Premium, please click the "Upgrade" button inside the CommentCraft AI extension.';
                 }
             })();
         }
 
-        // Логіка очікування завантаження (залишається без змін)
+        // Логіка очікування завантаження бібліотеки
         if (window.Paddle) {
             console.log('Paddle object already exists. Running setup.');
             setupPaddle();
