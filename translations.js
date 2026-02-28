@@ -17,10 +17,15 @@ const translations = {
         "terms_h1": "1. Usage & License", "terms_p1": "By installing this extension, you agree to use it for lawful purposes only. Purchasing a Premium license grants you a non-exclusive, non-transferable right to use all premium features for a single user.",
         "terms_h2": "2. Disclaimer", "terms_p2": "The software is provided \"as is\", without warranty of any kind. We do not guarantee that the AI generation will always be accurate or error-free. You are responsible for the content generated using the AI tools.",
         "terms_h3": "3. Contact", "terms_p3": "For any questions regarding these terms, please contact us at: wherethesignalmeetssilence@gmail.com",
+        "terms_h4": "4. Payment and Delivery", "terms_p4": "We accept payments via Visa and Mastercard through the WayForPay secure payment system. Since this is a digital service (software access), delivery is instant. Upon successful payment, your Premium license is activated automatically for your email address.",
 
         "ref_title": "Refund Policy", "ref_date": "Last updated: November 2025",
         "ref_h1": "14-Day Money-Back Guarantee", "ref_p1": "We want you to be satisfied with CommentCraft AI. If you are not happy with the Premium features, you may request a full refund within 14 days of your purchase.",
-        "ref_h2": "How to Request a Refund", "ref_p2": "To request a refund, please contact our support team at wherethesignalmeetssilence@gmail.com. Please include the email address used for the purchase."
+        "ref_h2": "How to Request a Refund", "ref_p2": "To request a refund, please contact our support team at wherethesignalmeetssilence@gmail.com. Please include the email address used for the purchase.",
+        "ref_h3": "Transaction Cancellation", "ref_p3": "You can cancel your payment transaction at any point before confirming it on the payment gateway page. Once the payment is completed, you are covered by our 14-day refund policy.",
+
+        "contact_title": "Contact Information", 
+        "contact_details": "<strong>Company / Individual Entrepreneur:</strong> FOP [Ваше ПІБ / Your Name]<br><strong>ITN (Tax ID):</strong> [Ваш ІПН / Your ITN]<br><strong>Legal & Physical Address:</strong> [Ваша адреса / Your Address]<br><strong>Phone:</strong> [Ваш телефон / Your Phone]<br><strong>Email:</strong> wherethesignalmeetssilence@gmail.com"
     },
     uk: {
         "nav_home": "Головна", "nav_terms": "Умови", "nav_privacy": "Конфіденційність", "nav_refund": "Повернення коштів",
@@ -40,10 +45,15 @@ const translations = {
         "terms_h1": "1. Використання та ліцензія", "terms_p1": "Встановлюючи розширення, ви погоджуєтесь використовувати його в законних цілях. Купівля Premium надає невиключне право на використання всіх преміум-функцій для одного користувача.",
         "terms_h2": "2. Відмова від відповідальності", "terms_p2": "Програмне забезпечення надається \"як є\". Ми не гарантуємо, що генерація ШІ завжди буде точною або безпомилковою. Ви несете відповідальність за контент, створений за допомогою інструментів ШІ.",
         "terms_h3": "3. Контакти", "terms_p3": "З будь-яких питань щодо цих умов звертайтеся за адресою: wherethesignalmeetssilence@gmail.com",
+        "terms_h4": "4. Оплата та доставка", "terms_p4": "Ми приймаємо оплату банківськими картками Visa та Mastercard через безпечну платіжну систему WayForPay. Оскільки це цифровий товар (доступ до програмного забезпечення), доставка здійснюється миттєво. Після успішної оплати ваш Premium-статус активується автоматично для вашої електронної пошти.",
 
         "ref_title": "Політика повернення", "ref_date": "Останнє оновлення: Листопад 2025",
         "ref_h1": "14-денна гарантія повернення", "ref_p1": "Якщо ви не задоволені функціями Premium, ви можете запросити повне повернення коштів протягом 14 днів після покупки.",
-        "ref_h2": "Як запросити повернення", "ref_p2": "Щоб запросити повернення, зв'яжіться з нашою підтримкою: wherethesignalmeetssilence@gmail.com. Будь ласка, вкажіть email, використаний для покупки."
+        "ref_h2": "Як запросити повернення", "ref_p2": "Щоб запросити повернення, зв'яжіться з нашою підтримкою: wherethesignalmeetssilence@gmail.com. Будь ласка, вкажіть email, використаний для покупки.",
+        "ref_h3": "Скасування транзакції", "ref_p3": "Ви можете скасувати транзакцію на будь-якому етапі до моменту її остаточного підтвердження на сторінці платіжної системи. Після успішної оплати діють умови 14-денного повернення коштів.",
+
+        "contact_title": "Контактна інформація", 
+        "contact_details": "<strong>ФОП:</strong> [Ваше ПІБ]<br><strong>ІПН:</strong> [Ваш ІПН]<br><strong>Юридична та фактична адреса:</strong> [Ваша адреса]<br><strong>Телефон:</strong> [Ваш телефон]<br><strong>Email:</strong> wherethesignalmeetssilence@gmail.com"
     },
     fr: {
         "nav_home": "Accueil", "nav_terms": "Conditions", "nav_privacy": "Confidentialité", "nav_refund": "Remboursement",
@@ -63,10 +73,15 @@ const translations = {
         "terms_h1": "1. Utilisation et licence", "terms_p1": "L'achat de Premium vous accorde un droit non exclusif d'utiliser toutes les fonctionnalités pour un seul utilisateur.",
         "terms_h2": "2. Clause de non-responsabilité", "terms_p2": "Le logiciel est fourni \"tel quel\". Vous êtes responsable du contenu généré à l'aide des outils IA.",
         "terms_h3": "3. Contact", "terms_p3": "Pour toute question, contactez-nous : wherethesignalmeetssilence@gmail.com",
+        "terms_h4": "4. Paiement et livraison", "terms_p4": "Nous acceptons Visa et Mastercard via WayForPay. S'agissant d'un produit numérique, la livraison est instantanée. Dès le paiement réussi, votre accès Premium est activé.",
 
         "ref_title": "Politique de remboursement", "ref_date": "Dernière mise à jour : Novembre 2025",
         "ref_h1": "Garantie de 14 jours", "ref_p1": "Si vous n'êtes pas satisfait, vous pouvez demander un remboursement complet dans les 14 jours suivant l'achat.",
-        "ref_h2": "Comment demander un remboursement", "ref_p2": "Contactez notre équipe d'assistance à wherethesignalmeetssilence@gmail.com avec l'e-mail utilisé pour l'achat."
+        "ref_h2": "Comment demander un remboursement", "ref_p2": "Contactez notre équipe d'assistance à wherethesignalmeetssilence@gmail.com avec l'e-mail utilisé pour l'achat.",
+        "ref_h3": "Annulation de transaction", "ref_p3": "Vous pouvez annuler la transaction à tout moment avant sa confirmation sur la page de paiement. Une fois payé, la politique de 14 jours s'applique.",
+
+        "contact_title": "Coordonnées", 
+        "contact_details": "<strong>Entreprise :</strong> FOP [Ваше ПІБ]<br><strong>Numéro d'identification :</strong> [Ваш ІПН]<br><strong>Adresse :</strong> [Ваша адреса]<br><strong>Téléphone :</strong> [Ваш телефон]<br><strong>E-mail :</strong> wherethesignalmeetssilence@gmail.com"
     },
     de: {
         "nav_home": "Startseite", "nav_terms": "AGB", "nav_privacy": "Datenschutz", "nav_refund": "Rückerstattung",
@@ -86,10 +101,15 @@ const translations = {
         "terms_h1": "1. Lizenz", "terms_p1": "Der Kauf einer Premium-Lizenz gewährt das Recht zur Nutzung aller Funktionen für einen Benutzer.",
         "terms_h2": "2. Haftungsausschluss", "terms_p2": "Die Software wird \"wie besehen\" bereitgestellt. Sie sind für die generierten Inhalte verantwortlich.",
         "terms_h3": "3. Kontakt", "terms_p3": "Kontaktieren Sie uns unter: wherethesignalmeetssilence@gmail.com",
+        "terms_h4": "4. Zahlung und Lieferung", "terms_p4": "Wir akzeptieren Visa und Mastercard über WayForPay. Da es sich um ein digitales Produkt handelt, erfolgt die Lieferung sofort. Nach erfolgreicher Zahlung wird Ihr Premium-Zugang aktiviert.",
 
         "ref_title": "Rückerstattungsrichtlinie", "ref_date": "Aktualisiert: November 2025",
         "ref_h1": "14-Tage-Garantie", "ref_p1": "Sie können innerhalb von 14 Tagen eine vollständige Rückerstattung beantragen.",
-        "ref_h2": "Rückerstattung anfordern", "ref_p2": "Kontaktieren Sie unseren Support unter wherethesignalmeetssilence@gmail.com mit Ihrer Kauf-E-Mail."
+        "ref_h2": "Rückerstattung anfordern", "ref_p2": "Kontaktieren Sie unseren Support unter wherethesignalmeetssilence@gmail.com mit Ihrer Kauf-E-Mail.",
+        "ref_h3": "Stornierung der Transaktion", "ref_p3": "Sie können die Transaktion jederzeit vor der Bestätigung auf der Zahlungsseite abbrechen. Nach der Zahlung gilt die 14-tägige Rückerstattungsrichtlinie.",
+
+        "contact_title": "Kontaktinformationen", 
+        "contact_details": "<strong>Unternehmen:</strong> FOP [Ваше ПІБ]<br><strong>Steuernummer:</strong> [Ваш ІПН]<br><strong>Adresse:</strong> [Ваша адреса]<br><strong>Telefon:</strong> [Ваш телефон]<br><strong>E-Mail:</strong> wherethesignalmeetssilence@gmail.com"
     },
     pl: {
         "nav_home": "Główna", "nav_terms": "Regulamin", "nav_privacy": "Prywatność", "nav_refund": "Zwroty",
@@ -109,9 +129,14 @@ const translations = {
         "terms_h1": "1. Licencja", "terms_p1": "Zakup Premium daje niewyłączne prawo do korzystania ze wszystkich funkcji dla jednego użytkownika.",
         "terms_h2": "2. Zastrzeżenia", "terms_p2": "Oprogramowanie jest dostarczane \"tak jak jest\". Ponosisz odpowiedzialność za generowane treści.",
         "terms_h3": "3. Kontakt", "terms_p3": "W razie pytań skontaktuj się z nami: wherethesignalmeetssilence@gmail.com",
+        "terms_h4": "4. Płatność i dostawa", "terms_p4": "Akceptujemy płatności Visa i Mastercard za pośrednictwem WayForPay. Ponieważ jest to produkt cyfrowy, dostawa jest natychmiastowa. Po udanej płatności dostęp Premium jest aktywowany.",
 
         "ref_title": "Polityka zwrotów", "ref_date": "Aktualizacja: Listopad 2025",
         "ref_h1": "14-dniowa gwarancja", "ref_p1": "Możesz zażądać pełnego zwrotu pieniędzy w ciągu 14 dni od zakupu.",
-        "ref_h2": "Jak zażądać zwrotu", "ref_p2": "Skontaktuj się z obsługą pod adresem wherethesignalmeetssilence@gmail.com, podając e-mail z zamówienia."
+        "ref_h2": "Jak zażądać zwrotu", "ref_p2": "Skontaktuj się z obsługą pod adresem wherethesignalmeetssilence@gmail.com, podając e-mail z zamówienia.",
+        "ref_h3": "Anulowanie transakcji", "ref_p3": "Możesz anulować transakcję w dowolnym momencie przed jej potwierdzeniem na stronie płatności. Po przetworzeniu płatności obowiązuje 14-dniowa polityka zwrotów.",
+
+        "contact_title": "Informacje kontaktowe", 
+        "contact_details": "<strong>Firma:</strong> FOP [Ваше ПІБ]<br><strong>NIP:</strong> [Ваш ІПН]<br><strong>Adres:</strong> [Ваша адреса]<br><strong>Telefon:</strong> [Ваш телефон]<br><strong>Email:</strong> wherethesignalmeetssilence@gmail.com"
     }
 };
